@@ -71,6 +71,11 @@ static void _update_wptr(struct adreno_device *adreno_dev, bool reset_timer)
 				gmu_core_regrmw(device, A6XX_GMU_AO_SPARE_CNTL,
 					0x2, 0x0);
 
+			/* Clear the keep alive */
+			if (gmu_core_isenabled(device))
+				gmu_core_regrmw(device, A6XX_GMU_AO_SPARE_CNTL,
+					0x2, 0x0);
+
 			reset_timer = true;
 			rb->skip_inline_wptr = false;
 		}
