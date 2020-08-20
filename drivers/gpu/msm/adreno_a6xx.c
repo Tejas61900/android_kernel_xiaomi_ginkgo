@@ -1505,6 +1505,7 @@ static int a6xx_reset(struct kgsl_device *device, int fault)
 {
 	struct adreno_device *adreno_dev = ADRENO_DEVICE(device);
 	int ret;
+	unsigned long flags = device->pwrctrl.ctrl_flags;
 
 	/* Use the regular reset sequence for No GMU */
 	if (!gmu_core_gpmu_isenabled(device))
@@ -1524,6 +1525,8 @@ static int a6xx_reset(struct kgsl_device *device, int fault)
 		return ret;
 
 	kgsl_pwrctrl_change_state(device, KGSL_STATE_ACTIVE);
+
+	device->pwrctrl.ctrl_flags = flags;
 
 	/*
 	 * If active_cnt is zero, there is no need to keep the GPU active. So,
