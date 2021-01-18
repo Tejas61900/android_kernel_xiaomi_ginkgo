@@ -1,7 +1,7 @@
 echo -e "\nStarting compilation...\n"
 # ENV
 R=n
-while read -p "You want to build for MIUI/Q or OOS? (oos) " bchoice; do
+while read -p "You want to build for MIUI/Q or OOS? (q/oos) " bchoice; do
 case "$bchoice" in
  q|Q)
   S="Q"
@@ -67,7 +67,7 @@ echo -e "\nCompiling $ZIPNAME\n"
 clang_build
 if [ -f "$out/arch/arm64/boot/Image.gz-dtb" ] && [ -f "$out/arch/arm64/boot/dtbo.img" ]; then
  echo -e "\nKernel compiled succesfully! Zipping up...\n"
- ZIPNAME="SixTeen•Kernel•$S•Ginklow-$(date '+%Y%m%d-%H%M').zip"
+ ZIPNAME="SixTeen•Kernel•"$S"•Ginklow-$(date '+%Y%m%d-%H%M').zip"
  if [ ! -d AnyKernel3 ]; then
   git clone -q https://github.com/HafizZiq/AnyKernel3 -b sixteen
  fi;
