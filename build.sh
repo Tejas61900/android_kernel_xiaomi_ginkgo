@@ -86,3 +86,4 @@ fi;
 if [ $R == y ]; then
  git rs --hard $(git log --pretty=oneline|head -n2|tail -n1|awk '{ print $1}')
 fi;
+exit 0
