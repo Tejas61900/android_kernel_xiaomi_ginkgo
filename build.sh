@@ -43,14 +43,15 @@ clang_build () {
 make O=$out ARCH=arm64 $CONFIG > /dev/null
 echo -e "${bold}Compiling with CLANG${normal}\n$KBUILD_COMPILER_STRING"
 clang_build
-if [ -f "$out/arch/arm64/boot/Image.gz-dtb" ] && [ -f "$out/arch/arm64/boot/dtbo.img" ]; then
+if [ -f "$out/arch/arm64/boot/Image.gz" ] && [ -f "$out/arch/arm64/boot/dtbo.img" ] && [ -f "$out/arch/arm64/boot/dts/qcom/trinket.dtb" ]; then
  echo -e "\nKernel compiled succesfully! Zipping up...\n"
  ZIPNAME="PerawanX☭•Q•Ginklow-$(date '+%Y%m%d-%H%M').zip"
  if [ ! -d AnyKernel3 ]; then
-  git clone -q https://github.com/HafizZiq/AnyKernel3 -b perawanx
+  git clone -q https://github.com/HafizZiq/AnyKernel3 --depth=1 -b perawanx
  fi;
- mv -f $out/arch/arm64/boot/Image.gz-dtb AnyKernel3
- mv -f $out/arch/arm64/boot/dtbo.img AnyKernel3
+ cp -f $out/arch/arm64/boot/Image.gz AnyKernel3
+ cp -f $out/arch/arm64/boot/dtbo.img AnyKernel3
+ cp -f $out/arch/arm64/boot/dts/qcom/trinket.dtb AnyKernel3/dtb
  cd AnyKernel3
  zip -r9 "$HOME/$ZIPNAME" *
  cd ..
