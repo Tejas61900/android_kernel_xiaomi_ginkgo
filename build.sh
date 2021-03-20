@@ -1,12 +1,31 @@
 echo -e "\nStarting compilation...\n"
 # ENV
+R=n
+while read -p "Cam patch? (y/n)" bchoice; do
+case "$bchoice" in
+ n|N)
+  break
+ ;;
+ y|Y)
+  R=y
+  export CONFIG_THINLTO=y
+  git cp -s 3679d8fbfbf11151109c71eb4308a21d4fb854ab
+  break
+ ;;
+ *)
+  echo
+  echo "Try again please!"
+  echo
+ ;;
+esac
+done
+
 CONFIG=vendor/sixteen_defconfig
 KERNEL_DIR=$(pwd)
 PARENT_DIR="$(dirname "$KERNEL_DIR")"
 KERN_IMG="$KERNEL_DIR/out/arch/arm64/boot/Image.gz-dtb"
 export KBUILD_BUILD_USER="hafizziq"
 export KBUILD_BUILD_HOST="ubuntu"
-export KBUILD_BUILD_VERSION="69"
 export KBUILD_BUILD_TIMESTAMP="$(TZ=Asia/Kuala_Lumpur date)"
 export PATH="$HOME/clang/proton/bin:$PATH"
 export LD_LIBRARY_PATH="$HOME/clang/proton/lib:$LD_LIBRARY_PATH"
@@ -30,10 +49,10 @@ clang_build () {
                           CC="clang" \
                           AR="llvm-ar" \
                           NM="llvm-nm" \
-			   LD="ld.lld" \
-			   AS="llvm-as" \
-			   OBJCOPY="llvm-objcopy" \
-			   OBJDUMP="llvm-objdump" \
+                          LD="ld.lld" \
+                          AS="llvm-as" \
+                          OBJCOPY="llvm-objcopy" \
+                          OBJDUMP="llvm-objdump" \
                           CLANG_TRIPLE=aarch64-linux-gnu- \
                           CROSS_COMPILE=$CROSS_COMPILE \
                           CROSS_COMPILE_ARM32=$CROSS_COMPILE_ARM32
@@ -61,5 +80,8 @@ if [ -f "$out/arch/arm64/boot/Image.gz" ] && [ -f "$out/arch/arm64/boot/dtbo.img
  rm -rf $out
 else
  echo -e "\nCompilation failed!"
+fi;
+if [ $R == y ]; then
+ git rs --hard $(git log --pretty=oneline|head -n2|tail -n1|awk '{ print $1}')
 fi;
 exit 0
