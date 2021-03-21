@@ -203,7 +203,7 @@ static struct afe_param_slimbus_slave_port_cfg tasha_slimbus_slave_port_cfg = {
 	.slimbus_dev_id = AFE_SLIMBUS_DEVICE_1,
 	.slave_dev_pgd_la = 0,
 	.slave_dev_intfdev_la = 0,
-	.bit_width = 24,
+	.bit_width = 16,
 	.data_format = 0,
 	.num_channels = 1
 };
