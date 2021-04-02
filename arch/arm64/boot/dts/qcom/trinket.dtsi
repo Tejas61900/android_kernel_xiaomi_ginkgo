@@ -400,7 +400,7 @@
 	};
 
 	chosen {
-		bootargs = "quiet noirqdebug rcupdate.rcu_normal_after_boot=1 rcu_nocbs=0-3 kpti=off";
+		bootargs = "quiet noirqdebug rcupdate.rcu_normal_after_boot=1 rcu_nocbs=0-7 kpti=off";
 	};
 
 	soc: soc { };
