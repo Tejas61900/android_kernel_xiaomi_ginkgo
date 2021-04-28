@@ -8,11 +8,18 @@ on:
 
 jobs:
   ginkgo:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
-    - name: Testing
+    - name: Updating Libraries
       run: |
-        sudo apt-get update && sudo apt upgrade -y && sudo apt-get install -y make bash
+        sudo apt-get update -y && sudo apt-get upgrade -y 
+        sudo apt-get install -y make clang bash g++ gcc cmake build-essential
+
+    - name: Testing Build
+      timeout-minutes: 320
+      continue-on-error: true
+      run: |
+        sudo bash build.sh
         sudo bash build1.sh
