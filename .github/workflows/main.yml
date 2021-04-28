@@ -15,4 +15,4 @@ jobs:
     - name: Testing
       run: |
         sudo apt-get update && sudo apt upgrade -y && sudo apt-get install -y make bash
-        sudo bash build.sh
+        sudo bash build1.sh
